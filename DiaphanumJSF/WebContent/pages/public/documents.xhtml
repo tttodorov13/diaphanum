@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="../layout.xhtml">
+		<h:messages layout="table" errorStyle="background: red;"
+			infoStyle="background: #AFEEEE;" globalOnly="true" />
+
+		<ui:define name="main">
+			<div id="main" class="site-main">
+				<div class="full-container">
+					<div id="primary" class="content-area">
+						<div id="content" class="site-content">
+							<div class="entry-content">
+								<h1>#{msgs.pageProtocols}</h1>
+								<div class="panel-grid">
+									<p:dataTable emptyMessage="#{msgs.noRecordsFound}"
+										var="document" value="#{documents.lazyModelDocument}"
+										paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+										paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+										selectionMode="single"
+										selection="#{documents.selectedDocument}" id="documentsTable"
+										lazy="true" widgetVar="documentsTable">
+										<p:column headerText="#{msgs.name}">
+											<h:outputLink target="_blank"
+												value="#{initParam['displayName']}/files/#{document.name}"
+												rendered="#{not auth.user.isAdmin}">
+													#{document.title}
+												</h:outputLink>
+											<h:link outcome="document" value="#{document.title}"
+												rendered="#{auth.user.isAdmin}">
+												<f:param name="documentId" value="#{document.id}" />
+											</h:link>
+										</p:column>
+										<p:column headerText="#{msgs.date}">
+											<h:outputText value="#{document.documentDate}">
+												<f:convertDateTime pattern="dd.MM.yyyy" type="date" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="#{msgs.signedBy}">
+											<h:outputText value="#{document.signedBy}" />
+										</p:column>
+										<p:column headerText="#{msgs.type}">
+											<h:outputText
+												value="#{documents.getDocumentTypeName(document.type)}" />
+										</p:column>
+									</p:dataTable>
+								</div>
+								<h1>#{msgs.legend}</h1>
+								<div class="panel-grid">
+									<p:dataTable emptyMessage="#{msgs.noRecordsFound}"
+										var="documentType" value="#{documents.documentTypes}" rows="5"
+										id="legendTable">
+										<p:column headerText="#{msgs.type}">
+											<h:outputText value="#{documentType.name}" />
+										</p:column>
+										<p:column headerText="#{msgs.details}">
+											<h:outputText value="#{documentType.description}" />
+										</p:column>
+									</p:dataTable>
+								</div>
+								<h:panelGroup layout="block" rendered="#{auth.user.isAdmin}">
+									<p:separator />
+									<h1>#{msgs.addingDocumentInArchive}</h1>
+									<div class="panel-grid">
+										<h:form id="documentNew" enctype="multipart/form-data">
+											<p:selectOneMenu id="documentType"
+												value="#{documents.documentNewTypeId}" required="true"
+												requiredMessage="#{msgs.noDocumentType}">
+												<f:selectItem itemLabel="#{msgs.documentType}" itemValue="" />
+												<f:selectItems value="#{documents.documentTypes}" var="type"
+													itemLabel="#{type.name}" itemValue="#{type.id}" />
+											</p:selectOneMenu>
+											<p:outputLabel for="documentName"
+												value="#{msgs.documentTitle}" />
+											<p:inputTextarea id="documentName"
+												placeholder="#{msgs.exampleDashStudentCouncil}"
+												required="true" requiredMessage="#{msgs.noDocumentName}"
+												value="#{documents.documentNew.title}"
+												validatorMessage="#{msgs.documentTitle}: #{msgs.invalidFieldTextLenght100}"
+												maxlength="100">
+												<f:validateLength minimum="1" maximum="100" />
+											</p:inputTextarea>
+											<p:outputLabel for="documentIssued"
+												value="#{msgs.dateIssued}" />
+											<p:calendar id="documentIssued"
+												value="#{documents.documentNew.documentDate}"
+												required="true" requiredMessage="#{msgs.noDocumentDate}"
+												placeholder="#{msgs.exampleDate}" navigator="true"
+												pattern="dd.MM.yyyy" mask="true" />
+											<p:outputLabel for="documentInstitution"
+												value="#{msgs.documentInstitution}" />
+											<p:inputTextarea id="documentInstitution"
+												placeholder="#{msgs.exampleNameInstitution}" required="true"
+												requiredMessage="#{msgs.noDocumentName}"
+												value="#{documents.documentNew.institution}"
+												validatorMessage="#{msgs.documentInstitution}: #{msgs.invalidFieldTextLenght100}"
+												maxlength="100">
+												<f:validateLength minimum="1" maximum="100" />
+											</p:inputTextarea>
+											<p:outputLabel for="documentSignedBy"
+												value="#{msgs.signedBy}" />
+											<p:inputText id="documentSignedBy"
+												value="#{documents.documentNew.signedBy}" maxlength="36"
+												required="true" requiredMessage="#{msgs.noDocumentSignedBy}"
+												placeholder="#{msgs.exampleNamePerson}" />
+											<p:fileUpload value="#{documents.file}" mode="simple"
+												skinSimple="true" allowTypes="/(\.|\/)(pdf)$/"
+												multiple="false" required="true"
+												requiredMessage="#{msgs.noDocumentFile}" />
+											<h:commandButton action="#{documents.documentCreate()}"
+												value="#{msgs.documentCreate}" />
+										</h:form>
+									</div>
+								</h:panelGroup>
+							</div>
+						</div>
+						<!-- #content .site-content -->
+					</div>
+					<!-- #primary .content-area -->
+				</div>
+				<!-- .full-container -->
+			</div>
+		</ui:define>
+		<!-- #main .site-main -->
+	</ui:composition>
+</h:body>
+</html>

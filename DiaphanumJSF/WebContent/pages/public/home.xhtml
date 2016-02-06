@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:body>
+	<ui:composition template="../layout.xhtml">
+		<h:messages layout="table" errorStyle="background: red;"
+			infoStyle="background: #AFEEEE;" globalOnly="true" />
+
+		<ui:define name="mainSlider">
+			<div id="main-slider" data-stretch="true">
+				<!-- meta slider -->
+				<div
+					class="metaslider metaslider-flex metaslider-30 ml-slider nav-hidden">
+					<div id="metaslider_container_30">
+						<div id="metaslider_30" class="flexslider">
+							<ul class="slides">
+								<li
+									style="display: block; width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; z-index: 1;"
+									class="vantage-slide-with-image"><div
+										class="full-container">
+										<div class="content">
+											<h:link target="_self" outcome="home">
+												<h:graphicImage value="/resources/img/slide1.png"
+													width="1080" height="420" draggable="false" />
+											</h:link>
+										</div>
+										<h:link target="_self" outcome="home">
+											<h:graphicImage value="/resources/img/slideBlank.png"
+												class="msDefaultImage" width="1080" height="420"
+												draggable="false" style="visibility: hidden;" />
+										</h:link>
+									</div></li>
+								<li
+									style="display: block; width: 100%; float: left; margin-right: -100%; position: relative; opacity: 1; z-index: 2;"
+									class="vantage-slide-with-image"><div
+										class="full-container">
+										<div class="content">
+											<h:link target="_self" outcome="login">
+												<h:graphicImage value="/resources/img/slide2.png"
+													width="1080" height="420" draggable="false" />
+											</h:link>
+										</div>
+										<h:link target="_self" outcome="login">
+											<h:graphicImage value="/resources/img/slideBlank.png"
+												class="msDefaultImage" width="1080" height="420"
+												draggable="false" style="visibility: hidden;" />
+										</h:link>
+									</div></li>
+								<li
+									style="display: block; width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; z-index: 1;"
+									class="vantage-slide-with-image"><div
+										class="full-container">
+										<div class="content">
+											<h:link target="_self" outcome="login"
+												rendered="#{empty auth.user.id}">
+												<h:graphicImage value="/resources/img/slide3.png"
+													width="1080" height="420" draggable="false" />
+											</h:link>
+											<h:link target="_self" outcome="projectNew"
+												rendered="#{not empty auth.user.id}">
+												<h:graphicImage value="/resources/img/slide3.png"
+													width="1080" height="420" draggable="false" />
+											</h:link>
+										</div>
+										<h:link target="_self" outcome="login"
+											rendered="#{empty auth.user.id}">
+											<h:graphicImage value="/resources/img/slideBlank.png"
+												class="msDefaultImage" width="1080" height="420"
+												draggable="false" style="visibility: hidden;" />
+										</h:link>
+										<h:link target="_self" outcome="projectNew"
+											rendered="#{not empty auth.user.id}">
+											<h:graphicImage value="/resources/img/slideBlank.png"
+												class="msDefaultImage" width="1080" height="420"
+												draggable="false" style="visibility: hidden;" />
+										</h:link>
+									</div></li>
+								<li
+									style="display: block; width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; z-index: 1;"
+									class="vantage-slide-with-image"><div
+										class="full-container">
+										<div class="content">
+											<h:link target="_self" outcome="projects">
+												<h:graphicImage value="/resources/img/slide4.png"
+													width="1080" height="420" draggable="false" />
+											</h:link>
+										</div>
+										<h:link target="_self" outcome="projects">
+											<h:graphicImage value="/resources/img/slideBlank.png"
+												class="msDefaultImage" width="1080" height="420"
+												draggable="false" style="visibility: hidden;" />
+										</h:link>
+									</div></li>
+								<li
+									style="display: block; width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; z-index: 1;"
+									class="vantage-slide-with-image"><div
+										class="full-container">
+										<div class="content">
+											<h:link target="_self" outcome="documents">
+												<h:graphicImage value="/resources/img/slide5.png"
+													width="1080" height="420" draggable="false" />
+											</h:link>
+										</div>
+										<h:link target="_self" outcome="documents">
+											<h:graphicImage value="/resources/img/slideBlank.png"
+												class="msDefaultImage" width="1080" height="420"
+												draggable="false" style="visibility: hidden;" />
+										</h:link>
+									</div></li>
+								<li
+									style="display: block; width: 100%; float: left; margin-right: -100%; position: relative; opacity: 0; z-index: 1;"
+									class="vantage-slide-with-image"><div
+										class="full-container">
+										<div class="content">
+											<h:link target="_self" outcome="feedback">
+												<h:graphicImage value="/resources/img/slide6.png"
+													width="1080" height="420" draggable="false" />
+											</h:link>
+										</div>
+										<h:link target="_self" outcome="feedback">
+											<h:graphicImage value="/resources/img/slideBlank.png"
+												class="msDefaultImage" width="1080" height="420"
+												draggable="false" style="visibility: hidden;" />
+										</h:link>
+									</div></li>
+							</ul>
+							<ol class="flex-control-nav flex-control-paging">
+								<li><a class="">1</a></li>
+								<li><a class="flex-active">2</a></li>
+								<li><a>3</a></li>
+								<li><a>4</a></li>
+								<li><a>5</a></li>
+								<li><a>6</a></li>
+							</ol>
+							<ul class="flex-direction-nav">
+								<li><a class="flex-prev" href="#{request.contextPath}/#">&lt;</a></li>
+								<li><a class="flex-next" href="#{request.contextPath}/#">&gt;</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!--// meta slider-->
+			</div>
+		</ui:define>
+		<!-- #main-slider -->
+
+		<ui:define name="main">
+			<div id="main" class="site-main">
+				<div class="full-container">
+					<div id="primary" class="content-area">
+						<div id="content" class="site-content">
+							<div class="entry-content">
+								<div class="panel-grid" id="pg-home-0">
+									<div class="panel-grid-cell" id="pgc-home-0-0">
+										<div
+											class="panel widget widget_circleicon-widget panel-first-child panel-last-child"
+											id="panel-home-0-0-0">
+											<div
+												class="circle-icon-box circle-icon-position-top circle-icon-hide-box circle-icon-size-medium">
+												<div class="circle-icon-wrapper">
+													<div class="circle-icon">
+														<div class="icon-file-text"></div>
+													</div>
+												</div>
+												<h4>
+													<c:if test="#{not empty auth.user.id}">
+														<h:link value="#{msgs.pageProjectNew}" class="link-title"
+															outcome="projectNew" />
+													</c:if>
+													<c:if test="#{empty auth.user.id}">
+														<h:link value="#{msgs.pageProjectNew}" class="link-title"
+															outcome="login" />
+													</c:if>
+												</h4>
+												<p class="text">
+													#{msgs.pageProjectNewTxt}<br /> <strong>#{msgs.pageProjectNewTxtStrong}</strong>
+												</p>
+												<c:if test="#{not empty auth.user.id}">
+													<a
+														href="#{request.contextPath}/pages/private/projectNew.xhtml"
+														class="more-button">#{msgs.readMore} <i></i></a>
+												</c:if>
+												<c:if test="#{empty auth.user.id}">
+													<a href="#{request.contextPath}/pages/public/login.xhtml"
+														class="more-button">#{msgs.readMore} <i></i></a>
+												</c:if>
+											</div>
+										</div>
+									</div>
+									<div class="panel-grid-cell" id="pgc-home-0-1">
+										<div
+											class="panel widget widget_circleicon-widget panel-first-child panel-last-child"
+											id="panel-home-0-1-0">
+											<div
+												class="circle-icon-box circle-icon-position-top circle-icon-hide-box circle-icon-size-medium">
+												<div class="circle-icon-wrapper">
+													<div class="circle-icon">
+														<div class="icon-usd"></div>
+													</div>
+												</div>
+												<h4>
+													<h:link value="#{msgs.pageProjects}" class="link-title"
+														outcome="projects" />
+												</h4>
+												<p class="text">
+													#{msgs.pageProjectsTxt}<br /> <strong>#{msgs.pageProjectsTxtStrong}</strong>
+												</p>
+												<a href="#{request.contextPath}/pages/public/projects.xhtml"
+													class="more-button">#{msgs.readMore} <i></i></a>
+											</div>
+										</div>
+									</div>
+									<div class="panel-grid-cell" id="pgc-home-0-2">
+										<div
+											class="panel widget widget_circleicon-widget panel-first-child panel-last-child"
+											id="panel-home-0-2-0">
+											<div
+												class="circle-icon-box circle-icon-position-top circle-icon-hide-box circle-icon-size-medium">
+												<div class="circle-icon-wrapper">
+													<div class="circle-icon">
+														<div class="icon-archive"></div>
+													</div>
+												</div>
+												<h4>
+													<h:link value="#{msgs.pageProtocols}" class="link-title"
+														outcome="documents" />
+												</h4>
+												<p class="text">
+													#{msgs.pageProtocolsTxt}<br /> <strong>#{msgs.pageProtocolsTxtStrong}</strong>
+												</p>
+												<a
+													href="#{request.contextPath}/pages/public/documents.xhtml"
+													class="more-button">#{msgs.readMore} <i></i></a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="panel-grid" id="pg-home-2">
+									<div class="panel-grid-cell" id="pgc-home-2-0">
+										<div
+											class="panel widget widget_siteorigin-panels-image panel-first-child"
+											id="feedback">
+											<a href="#{request.contextPath}/pages/public/feedback.xhtml">
+												<h:graphicImage
+													value="/resources/img/logoStudentCouncil.png" />
+											</a>
+										</div>
+										<div class="panel widget widget_text panel-last-child"
+											id="feedbackText">
+											<div class="textwidget">
+												<div align="center" class="title">
+													<h:link value="#{msgs.pageFeedback}" outcome="feedback" />
+												</div>
+												<div align="center">#{msgs.pageFeedbackTxt}</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel-grid-cell" id="pgc-home-2-1">
+										<div
+											class="panel widget widget_siteorigin-panels-image panel-first-child"
+											id="profile">
+											<h:link outcome="login">
+												<h:graphicImage value="/resources/img/profile.png" />
+											</h:link>
+										</div>
+										<div class="panel widget widget_text panel-last-child"
+											id="profileText">
+											<div class="textwidget">
+												<div align="center" class="title">
+													<h:link value="#{msgs.pageLogin}" outcome="login" />
+												</div>
+												<div align="center">#{msgs.pageLoginTxt}</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel-grid-cell" id="pgc-home-2-2"></div>
+									<div class="panel-grid-cell" id="pgc-home-2-3">
+										<div
+											class="panel widget widget_siteorigin-panels-postloop panel-first-child panel-last-child"
+											id="panel-home-2-3-0">
+											<h3 class="widget-title">
+												<span class="vantage-carousel-title"><span
+													class="vantage-carousel-title-text">#{msgs.latest}</span><a
+													href="#{request.contextPath}/#" class="next">next</a><a
+													href="#{request.contextPath}/#" class="previous">previous</a></span>
+											</h3>
+											<div class="vantage-carousel-wrapper">
+												<ul class="vantage-carousel">
+													<li class="carousel-entry">
+														<div class="thumbnail">
+															<h:outputLink target="_blank"
+																value="#{initParam['displayName']}/files/project#{home.project.id}.pdf"
+																style="background-image: url('#{resource['img/project.png']}')">
+																<span class="overlay"></span>
+															</h:outputLink>
+														</div>
+														<h3>
+															<h:outputLink target="_blank"
+																value="#{initParam['displayName']}/files/project#{home.project.id}.pdf">
+																#{home.project.name.toUpperCase()}
+															</h:outputLink>
+														</h3>
+													</li>
+													<li class="carousel-entry">
+														<div class="thumbnail">
+															<h:outputLink target="_blank"
+																value="#{initParam['displayName']}/files/#{home.document.name}"
+																style="background-image: url('#{resource['img/document.png']}')">
+																<span class="overlay"></span>
+															</h:outputLink>
+														</div>
+														<h3>
+															<h:outputLink target="_blank"
+																value="#{initParam['displayName']}/files/#{home.document.name}">
+																#{home.document.title.toUpperCase()}
+															</h:outputLink>
+														</h3>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="panel-grid-cell" id="pgc-home-2-4"></div>
+								</div>
+							</div>
+						</div>
+						<!-- #content .site-content -->
+					</div>
+					<!-- #primary .content-area -->
+				</div>
+				<!-- .full-container -->
+			</div>
+		</ui:define>
+		<!-- #main .site-main -->
+	</ui:composition>
+</h:body>
+</html>

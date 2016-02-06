@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+<h:body>
+	<ui:composition template="../layout.xhtml">
+		<h:messages layout="table" errorStyle="background: red;"
+			infoStyle="background: #AFEEEE;" globalOnly="true" />
+		<ui:define name="main">
+			<div id="main" class="site-main">
+				<div class="full-container">
+					<div id="primary" class="content-area">
+						<div id="content" class="site-content">
+							<div class="entry-content">
+								<div class="panel-grid">
+									<h:form>
+										<p:outputPanel>
+											<h:link outcome="home" styleClass="ui-btn ui-input-btn ui-corner-all ui-shadow"> 
+												#{msgs.pageHome}
+											</h:link>
+										</p:outputPanel>
+										<p:outputPanel rendered="#{not empty auth.user.id}">
+											<h:link outcome="projectNew" styleClass="ui-btn ui-input-btn ui-corner-all ui-shadow"> 
+												#{msgs.pageProjectNew}
+											</h:link>
+										</p:outputPanel>
+										<p:outputPanel>
+											<h:link outcome="projects" styleClass="ui-btn ui-input-btn ui-corner-all ui-shadow"> 
+												#{msgs.pageProjects}
+											</h:link>
+										</p:outputPanel>
+										<p:outputPanel>
+											<h:link outcome="documents" styleClass="ui-btn ui-input-btn ui-corner-all ui-shadow"> 
+												#{msgs.pageProtocols}
+											</h:link>
+										</p:outputPanel>
+										<p:outputPanel>
+											<h:link outcome="feedback" styleClass="ui-btn ui-input-btn ui-corner-all ui-shadow"> 
+												#{msgs.pageFeedback}
+											</h:link>
+										</p:outputPanel>
+										<p:outputPanel rendered="#{empty auth.user.id}">
+											<h:link outcome="login" styleClass="ui-btn ui-input-btn ui-corner-all ui-shadow"> 
+												#{msgs.pageLogin}
+											</h:link>
+										</p:outputPanel>
+										<p:outputPanel rendered="#{not empty auth.user.id}">
+											<h:link outcome="profile" styleClass="ui-btn ui-input-btn ui-corner-all ui-shadow"> 
+												#{msgs.pageProfile}
+											</h:link>
+										</p:outputPanel>
+									</h:form>
+								</div>
+							</div>
+						</div>
+						<!-- #content .site-content -->
+					</div>
+					<!-- #primary .content-area -->
+				</div>
+				<!-- .full-container -->
+			</div>
+		</ui:define>
+		<!-- #main .site-main -->
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<f:view contentType="text/html" encoding="UTF-8" />
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=10" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="msapplication-TileColor" content="#001157" />
+	</f:facet>
+	<title>#{msgs.systemTitle}</title>
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{resource['img/favicon.png']}" />
+	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputStylesheet library="css" name="mobilenav.css" />
+	<h:outputStylesheet library="css" name="so-mobilenav.css" />
+	<h:outputStylesheet library="css" name="footer.css" />
+	<h:outputStylesheet library="css" name="flexslider.css" />
+	<h:outputScript library="js" name="jquery.js" />
+	<h:outputScript library="js" name="jquery-migrate.min.js" />
+	<h:outputScript library="js" name="jquery.flexslider.min.js" />
+	<h:outputScript library="js" name="jquery.flexslider-min.js" />
+	<h:outputScript library="js" name="jquery.fitvids.min.js" />
+	<h:outputScript library="js" name="jquery.theme-main.min.js" />
+	<h:outputScript library="js" name="mobilenav.min.js" />
+	<h:outputScript library="js" name="metaslider.js" />
+</h:head>
+<h:body
+	styleClass="home page page-id-760 page-template page-template-home-panels page-template-home-panels-php siteorigin-panels siteorigin-panels-home responsive layout-full has-menu-search mobilenav"
+	style="background-color: #001157">
+	<p:growl id="messages" />
+	<pm:page>
+		<pm:content style="background-color: #001157;">
+			<div id="page-wrapper">
+				<header id="masthead" class="site-header">
+					<section class="full-container section-logo"
+						style="height: 159px; padding: 0px;">
+						<a href="http://students.uni-sofia.bg" title="SU Student Council"
+							rel="home" class="logo"> <h:graphicImage
+								value="/resources/img/studentCouncilLogo.png"
+								styleClass="studentCouncilLogo" /></a>
+						<div id="header-sidebar"
+							style="padding-top: 32px; padding-bottom: 32px;">
+							<aside id="nav_menu-5" class="widget widget_nav_menu"></aside>
+						</div>
+					</section>
+					<!-- section.full-container -->
+					<nav
+						class="site-navigation main-navigation primary use-sticky-menu">
+						<div class="full-container">
+							<div id="search-icon" style="display: none;">
+								<div id="search-icon-icon">
+									<div class="icon"></div>
+								</div>
+								<h:form method="get" class="searchform"
+									action="http://students.uni-sofia.bg">
+									<p:inputText placeholder="#{msgs.searching}..."
+										style="padding-left: 30px;" />
+								</h:form>
+							</div>
+							<div id="so-mobilenav-standard-2" data-id="2"
+								class="so-mobilenav-standard"></div>
+							<div class="menu-lwd-main-menu-container">
+								<ul id="menu-lwd-main-menu" class="menu">
+									<li
+										class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-48">
+										<h:link value="#{msgs.pageHome}" outcome="home"
+											styleClass="main-menu-item-link" />
+									</li>
+									<li
+										class="menu-item menu-item-type-post_type menu-item-object-page menu-item-47">
+										<h:link value="#{msgs.pageProjectNew}" outcome="projectNew"
+											rendered="#{not empty auth.user.id}"
+											styleClass="main-menu-item-link" />
+									</li>
+									<li
+										class="menu-item menu-item-type-post_type menu-item-object-page">
+										<h:link value="#{msgs.pageProjects}" outcome="projects"
+											styleClass="main-menu-item-link" />
+									</li>
+									<li
+										class="menu-item menu-item-type-post_type menu-item-object-page">
+										<h:link value="#{msgs.pageProtocols}" outcome="documents"
+											styleClass="main-menu-item-link" />
+									</li>
+									<li
+										class="menu-item menu-item-type-post_type menu-item-object-page">
+										<h:link value="#{msgs.pageFeedback}" outcome="feedback"
+											styleClass="main-menu-item-link" />
+									</li>
+									<li
+										class="menu-item menu-item-type-post_type menu-item-object-page">
+										<h:link value="#{msgs.pageLogin}" outcome="login"
+											rendered="#{empty auth.user.id}"
+											styleClass="main-menu-item-link main-menu-item-link-last" />
+										<h:link value="#{msgs.pageProfile}" outcome="profile"
+											rendered="#{not empty auth.user.id}"
+											styleClass="main-menu-item-link main-menu-item-link-last" />
+									</li>
+								</ul>
+							</div>
+							<div id="so-mobilenav-mobile-2" data-id="2"
+								class="so-mobilenav-mobile"></div>
+							<div class="menu-mobilenav-container">
+								<ul id="mobile-nav-item-wrap-2" class="menu">
+									<li><h:link value="#{msgs.menu}" outcome="menu"
+											styleClass="mobilenav-main-link" style="border-right: none;" />
+									</li>
+								</ul>
+							</div>
+						</div>
+					</nav>
+					<!-- .site-navigation .main-navigation -->
+				</header>
+				<!-- #masthead .site-header -->
+
+				<!-- Main Slider -->
+				<ui:insert name="mainSlider">
+				</ui:insert>
+
+				<!-- Main -->
+				<ui:insert name="main">
+				</ui:insert>
+
+				<footer id="colophon" class="site-footer">
+					<!-- #footer-widgets -->
+					<div id="site-info">
+						©
+						<h:outputText value="#{layout.currentDate}">
+							<f:convertDateTime pattern="yyyy" type="date" />
+						</h:outputText>
+						#{msgs.footerTxt}
+					</div>
+					<!-- .site-info -->
+				</footer>
+				<!-- #colophon .site-footer -->
+			</div>
+			<!-- #page-wrapper -->
+			<a href="http://students.uni-sofia.bg/wp/#" id="scroll-to-top"></a>
+			<div id="fancybox-tmp"></div>
+			<div id="fancybox-loading">
+				<div></div>
+			</div>
+			<div id="fancybox-overlay"></div>
+			<div id="fancybox-wrap">
+				<div id="fancybox-outer">
+					<div class="fancybox-bg" id="fancybox-bg-n"></div>
+					<div class="fancybox-bg" id="fancybox-bg-ne"></div>
+					<div class="fancybox-bg" id="fancybox-bg-e"></div>
+					<div class="fancybox-bg" id="fancybox-bg-se"></div>
+					<div class="fancybox-bg" id="fancybox-bg-s"></div>
+					<div class="fancybox-bg" id="fancybox-bg-sw"></div>
+					<div class="fancybox-bg" id="fancybox-bg-w"></div>
+					<div class="fancybox-bg" id="fancybox-bg-nw"></div>
+					<div id="fancybox-content"></div>
+					<a id="fancybox-close"></a>
+					<div id="fancybox-title"></div>
+					<a href="javascript:;" id="fancybox-left"><span
+						class="fancy-ico" id="fancybox-left-ico"></span></a><a
+						href="javascript:;" id="fancybox-right"><span
+						class="fancy-ico" id="fancybox-right-ico"> </span></a>
+				</div>
+			</div>
+		</pm:content>
+	</pm:page>
+</h:body>
+</h:html>

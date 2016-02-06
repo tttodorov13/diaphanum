@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="../layout.xhtml">
+		<h:messages layout="table" errorStyle="background: red;"
+			infoStyle="background: #AFEEEE;" globalOnly="true" />
+
+		<ui:define name="main">
+			<div id="main" class="site-main">
+				<div class="full-container">
+					<div id="primary" class="content-area">
+						<div id="content" class="site-content">
+							<div class="entry-content">
+								<h1>#{msgs.pageProjects}</h1>
+								<div class="panel-grid">
+									<p:dataTable emptyMessage="#{msgs.noRecordsFound}"
+										var="project" value="#{projects.lazyModelProject}"
+										paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+										paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+										selectionMode="single" selection="#{projects.selectedProject}"
+										id="projectsTable" lazy="true"
+										rowStyleClass="#{project.status eq 2 ? 'projectStatusReturned' : null}
+											#{project.status eq 3 ? 'projectStatusChecked' : null}
+											#{project.status eq 4 ? 'projectStatusDisapproved' : null}
+											#{project.status eq 5 ? 'projectStatusApproved' : null}"
+										widgetVar="projectsTable">
+										<p:column headerText="#{msgs.projectName}">
+											<h:outputLink target="_blank"
+												value="#{initParam['displayName']}/files/project#{project.id}.pdf"
+												rendered="#{not auth.user.isAdmin}">
+													#{project.name}
+												</h:outputLink>
+											<h:link outcome="projectEdit" value="#{project.name}"
+												rendered="#{auth.user.isAdmin}">
+												<f:param name="projectId" value="#{project.id}" />
+											</h:link>
+										</p:column>
+										<p:column headerText="#{msgs.accountablePerson}">
+											<h:outputText
+												value="#{projects.getProjectUserFullname(project.createdBy)}" />
+										</p:column>
+										<p:column headerText="#{msgs.projectStatus}">
+											<h:outputText
+												value="#{projects.getProjectStatusName(project.status)}" />
+										</p:column>
+									</p:dataTable>
+								</div>
+								<h1>#{msgs.legend}</h1>
+								<div class="panel-grid">
+									<p:dataTable emptyMessage="#{msgs.noRecordsFound}"
+										var="projectStatus" value="#{projects.projectStatuses}"
+										rows="5" id="legendTable"
+										rowStyleClass="#{projectStatus.id eq 2 ? 'projectStatusReturned' : null}
+											#{projectStatus.id eq 3 ? 'projectStatusChecked' : null}
+											#{projectStatus.id eq 4 ? 'projectStatusDisapproved' : null}
+											#{projectStatus.id eq 5 ? 'projectStatusApproved' : null}">
+										<p:column headerText="#{msgs.status}">
+											<h:outputText value="#{projectStatus.name}" />
+										</p:column>
+										<p:column headerText="#{msgs.details}">
+											<h:outputText value="#{projectStatus.description}" />
+										</p:column>
+									</p:dataTable>
+								</div>
+							</div>
+						</div>
+						<!-- #content .site-content -->
+					</div>
+					<!-- #primary .content-area -->
+				</div>
+				<!-- .full-container -->
+			</div>
+		</ui:define>
+		<!-- #main .site-main -->
+	</ui:composition>
+</h:body>
+</html>

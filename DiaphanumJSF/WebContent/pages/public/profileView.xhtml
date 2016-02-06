@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="../layout.xhtml">
+		<h:messages layout="table" errorStyle="background: red;"
+			infoStyle="background: #AFEEEE;" globalOnly="true" />
+		<ui:define name="main">
+			<div id="main" class="site-main">
+				<div class="full-container">
+					<div id="primary" class="content-area">
+						<div id="content" class="site-content">
+							<div class="entry-content">
+								<h1>#{msgs.pageProfile}</h1>
+								<div class="panel-grid" id="pg-home-0">
+									<div class="panel-grid-cell" id="pgc-home-0-0">
+										<div
+											class="panel widget widget_siteorigin-panels-image panel-first-child profile">
+											<h:graphicImage value="/resources/img/profile.png"
+												style="width: 160px; height: 160px;" />
+										</div>
+										<div
+											class="panel widget widget_text panel-last-child profileText">
+											<div class="textwidget">
+												<div align="center" class="title">
+													<h:outputText
+														rendered="#{empty profileView.profile.fullname}"
+														value="#{msgs.pageProfile}" />
+													<h:outputText
+														rendered="#{not empty profileView.profile.fullname}"
+														value="#{profileView.profile.fullname}" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<h:panelGroup rendered="#{profileView.user.isAdmin}">
+										<div class="panel-grid-cell" id="pgc-home-0-1">
+											<div class="profile">
+												<h:form>
+													<div class="textwidget">
+														<p:outputLabel value="#{msgs.nameOfUser}" for="nameOfUser" />
+														<p:inputText value="#{profileView.profile.fullname}"
+															id="nameOfUser" placeholder="#{msgs.nameOfUser}"
+															disabled="true" />
+													</div>
+													<div class="textwidget">
+														<p:outputLabel value="#{msgs.email}" for="email" />
+														<p:inputText value="#{profileView.profile.email}"
+															id="email" placeholder="#{msgs.email}" required="true"
+															disabled="true" />
+													</div>
+													<div class="textwidget">
+														<p:outputLabel value="#{msgs.phone}" for="phone" />
+														<p:inputText value="#{profileView.profile.phone}"
+															id="phone" placeholder="#{msgs.phone}" required="true"
+															disabled="true" />
+													</div>
+													<div class="textwidget">
+														<p:outputLabel value="#{msgs.admin}" for="isAdmin" />
+														<p:selectBooleanCheckbox
+															value="#{profileView.profile.isAdmin}" id="isAdmin"
+															style="margin-top: 20px; margin-bottom: 40px;" />
+													</div>
+													<div class="textwidget" style="margin-top: 20px;">
+														<h:commandButton action="#{profileView.updateUser()}"
+															value="#{msgs.confirm}">
+															<f:param name="userId" value="#{profileView.profile.id}" />
+														</h:commandButton>
+													</div>
+												</h:form>
+											</div>
+										</div>
+									</h:panelGroup>
+								</div>
+								<p:separator />
+								<h1>#{msgs.projectsOfUser}</h1>
+								<div class="panel-grid">
+									<p:dataTable emptyMessage="#{msgs.noRecordsFound}"
+										var="project" value="#{profileView.lazyModelProject}"
+										paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+										paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+										selectionMode="single"
+										selection="#{profileView.selectedProject}" id="projectTable"
+										lazy="true"
+										rowStyleClass="#{project.status eq 2 ? 'projectStatusReturned' : null}
+											#{project.status eq 3 ? 'projectStatusChecked' : null}
+											#{project.status eq 4 ? 'projectStatusDisapproved' : null}
+											#{project.status eq 5 ? 'projectStatusApproved' : null}">
+										<p:column headerText="#{msgs.projectName}">
+											<h:link outcome="projectEdit" value="#{project.name}">
+												<f:param name="projectId" value="#{project.id}" />
+											</h:link>
+										</p:column>
+										<p:column headerText="#{msgs.projectCommend}">
+											<h:outputText value="#{project.commend}" />
+										</p:column>
+										<p:column headerText="#{msgs.projectCreatedOn}">
+											<h:outputText value="#{project.createdOn}">
+												<f:convertDateTime pattern="dd.M.yyyy" type="date" />
+											</h:outputText>
+										</p:column>
+									</p:dataTable>
+								</div>
+								<h1>#{msgs.legend}</h1>
+								<div class="panel-grid">
+									<p:dataTable var="projectStatus"
+										emptyMessage="#{msgs.noRecordsFound}"
+										value="#{profileView.projectStatuses}" rows="5"
+										id="legendTable"
+										rowStyleClass="#{projectStatus.id eq 2 ? 'projectStatusReturned' : null}
+											#{projectStatus.id eq 3 ? 'projectStatusChecked' : null}
+											#{projectStatus.id eq 4 ? 'projectStatusDisapproved' : null}
+											#{projectStatus.id eq 5 ? 'projectStatusApproved' : null}">
+										<p:column headerText="#{msgs.status}">
+											<h:outputText value="#{projectStatus.name}" />
+										</p:column>
+										<p:column headerText="#{msgs.details}">
+											<h:outputText value="#{projectStatus.description}" />
+										</p:column>
+									</p:dataTable>
+								</div>
+								<p:separator />
+								<h1>#{msgs.requestsOfUser}</h1>
+								<div class="panel-grid">
+									<p:dataTable emptyMessage="#{msgs.noRecordsFound}"
+										var="message" value="#{profileView.lazyModelMessage}"
+										paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+										paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+										selectionMode="single"
+										selection="#{profileView.selectedMessage}" id="profileTable"
+										lazy="true"
+										rowStyleClass="#{empty message.reply ? 'messageNotReplied' : null}"
+										widgetVar="profileTable">
+										<p:column headerText="#{msgs.request}" style="width: 50%;">
+											<h:outputText value="#{message.content}" />
+										</p:column>
+										<p:column headerText="#{msgs.reply}" style="width: 50%;">
+											<h:outputText value="#{message.reply}" />
+										</p:column>
+									</p:dataTable>
+								</div>
+								<p:separator />
+								<h1>#{msgs.users}</h1>
+								<div class="panel-grid">
+									<p:dataTable emptyMessage="#{msgs.noRecordsFound}" var="user"
+										value="#{profileView.lazyModelUser}" paginator="true"
+										rows="10" rowsPerPageTemplate="5,10,15"
+										paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+										selectionMode="single" selection="#{profileView.selectedUser}"
+										id="usersTable" lazy="true" widgetVar="usersTable"
+										rowStyleClass="#{user.isAdmin ? 'userAdmin' : null}">
+										<p:column headerText="#{msgs.nameOfUser}">
+											<h:link outcome="profileView" value="#{user.fullname}">
+												<f:param name="userId" value="#{user.id}" />
+											</h:link>
+										</p:column>
+										<p:column headerText="#{msgs.email}">
+											<h:outputLink value="mailto:#{user.email}">
+												<f:param name="subject" value="#{msgs.diaphanum}" />
+												<f:param name="body" value="#{msgs.diaphanum}" />
+												<h:outputText value="#{user.email}" />
+											</h:outputLink>
+										</p:column>
+										<p:column headerText="#{msgs.phone}">
+											<h:outputLink value="tel:#{user.phone}">
+												<h:outputText value="#{user.phone}" />
+											</h:outputLink>
+										</p:column>
+									</p:dataTable>
+								</div>
+							</div>
+						</div>
+						<!-- #content .site-content -->
+					</div>
+					<!-- #primary .content-area -->
+				</div>
+				<!-- .full-container -->
+			</div>
+		</ui:define>
+		<!-- #main .site-main -->
+	</ui:composition>
+</h:body>
+</html>

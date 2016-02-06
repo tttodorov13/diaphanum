@@ -1,0 +1,12 @@
+.so-mobilenav-mobile+* {
+	display: none;
+}
+
+@media screen and (max-width: 480px) {
+	.so-mobilenav-mobile+* {
+		display: block;
+	}
+	.so-mobilenav-standard+* {
+		display: none;
+	}
+}

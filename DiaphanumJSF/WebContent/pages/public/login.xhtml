@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="../layout.xhtml">
+		<h:messages layout="table" errorStyle="background: red;"
+			infoStyle="background: #AFEEEE;" globalOnly="true" />
+
+		<ui:define name="main">
+			<div id="main" class="site-main">
+				<div class="full-container">
+					<div id="primary" class="content-area">
+						<div id="content" class="site-content">
+							<div class="entry-content">
+								<div class="panel-grid" id="pg-home-1">
+									<div class="panel-grid-cell" id="pgc-home-1-0">
+										<div
+											class="panel widget widget_siteorigin-panels-image panel-first-child profile">
+											<a href="http://students.uni-sofia.bg/wp/?page_id=51"> <h:graphicImage
+													value="/resources/img/profile.png" /></a>
+										</div>
+										<div
+											class="panel widget widget_text panel-last-child profileText">
+											<div class="textwidget">
+												<div align="center" class="title">#{msgs.pageLogin}</div>
+												<div align="center">#{msgs.pageLoginTxt}</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel-grid-cell" id="pgc-home-1-1">
+										<h:form>
+											<div class="profile">
+												<div class="textwidget">
+													<div align="center" class="title">
+														<h4>#{msgs.emailOrPhone}:</h4>
+													</div>
+													<div align="center">
+														<p:inputText value="#{auth.username}" required="true"
+															requiredMessage="#{msgs.noUserName}" />
+													</div>
+												</div>
+												<div class="textwidget">
+													<div align="center" class="title">
+														<h4>#{msgs.password}:</h4>
+													</div>
+													<div align="center">
+														<p:password value="#{auth.password}" required="true"
+															requiredMessage="#{msgs.noPassword}" />
+													</div>
+												</div>
+												<div class="textwidget" style="margin-top: 20px;">
+													<div align="center">
+														<h:commandButton action="#{auth.login()}"
+															styleClass="button" value="#{msgs.signIn}" />
+													</div>
+												</div>
+											</div>
+										</h:form>
+									</div>
+								</div>
+								<p:separator />
+								<div class="panel-grid" id="pg-home-2">
+									<div class="panel-grid-cell" id="pgc-home-2-0">
+										<div
+											class="panel widget widget_siteorigin-panels-image panel-first-child profile">
+											<a href="http://students.uni-sofia.bg/wp/?page_id=51"> <h:graphicImage
+													value="/resources/img/profileNew.png" /></a>
+										</div>
+										<div
+											class="panel widget widget_text panel-last-child profileText">
+											<div class="textwidget">
+												<div align="center" class="title">
+													#{msgs.registration}</div>
+											</div>
+										</div>
+									</div>
+									<h:form>
+										<div class="panel-grid-cell" id="pgc-home-2-1">
+											<div class="profile">
+												<div class="textwidget">
+													<div align="center">
+														<p:inputText value="#{auth.email}" required="true"
+															label="email" placeholder="#{msgs.email}"
+															styleClass="ttc" requiredMessage="#{msgs.noEmail}"
+															validatorMessage="#{msgs.invalidEmailFormat}">
+															<f:validateRegex
+																pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+														</p:inputText>
+													</div>
+												</div>
+											</div>
+											<div class="profile">
+												<div class="textwidget">
+													<div align="center">
+														<p:password value="#{auth.password1}" required="true"
+															placeholder="#{msgs.password}"
+															requiredMessage="#{msgs.noPassword}"
+															validatorMessage="#{msgs.invalidPassword}">
+															<f:validateLength minimum="10"></f:validateLength>
+															<f:validateLength maximum="20"></f:validateLength>
+														</p:password>
+													</div>
+												</div>
+											</div>
+											<div class="profile">
+												<div class="textwidget">
+													<div align="center">
+														<p:password value="#{auth.password2}" required="true"
+															placeholder="#{msgs.repeatePassword}"
+															requiredMessage="#{msgs.noPassword}"
+															validatorMessage="#{msgs.invalidPassword}">
+															<f:validateLength minimum="10"></f:validateLength>
+															<f:validateLength maximum="20"></f:validateLength>
+														</p:password>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="panel-grid-cell" id="pgc-home-2-3">
+											<div>
+												<div class="textwidget">
+													<div align="center">
+														<p:captcha label="Captcha" required="true"
+															requiredMessage="#{msgs.captchaRequired}" />
+													</div>
+												</div>
+											</div>
+											<div class="profile">
+												<div class="textwidget" style="margin-top: 20px;">
+													<div align="center">
+														<h:commandButton action="#{auth.register()}"
+															styleClass="button" value="#{msgs.signUp}" />
+													</div>
+												</div>
+											</div>
+										</div>
+									</h:form>
+								</div>
+							</div>
+						</div>
+						<!-- #content .site-content -->
+					</div>
+					<!-- #primary .content-area -->
+				</div>
+				<!-- .full-container -->
+			</div>
+		</ui:define>
+		<!-- #main .site-main -->
+	</ui:composition>
+</h:body>
+</html>

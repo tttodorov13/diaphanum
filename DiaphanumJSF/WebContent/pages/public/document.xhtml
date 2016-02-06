@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="../layout.xhtml">
+		<h:messages layout="table" errorStyle="background: red;"
+			infoStyle="background: #AFEEEE;" globalOnly="true" />
+
+		<ui:define name="main">
+			<div id="main" class="site-main">
+				<div class="full-container">
+					<div id="primary" class="content-area">
+						<div id="content" class="site-content">
+							<div class="entry-content">
+								<h1>#{msgs.legend}</h1>
+								<div class="panel-grid">
+									<p:dataTable emptyMessage="#{msgs.noRecordsFound}"
+										var="documentType" value="#{document.documentTypes}" rows="5"
+										id="legendTable">
+										<p:column headerText="#{msgs.type}">
+											<h:outputText value="#{documentType.name}" />
+										</p:column>
+										<p:column headerText="#{msgs.details}">
+											<h:outputText value="#{documentType.description}" />
+										</p:column>
+									</p:dataTable>
+								</div>
+								<h1>#{msgs.editingDocumentInArchive}</h1>
+								<div class="panel-grid">
+									<h:form id="documentEdit" enctype="multipart/form-data">
+										<p:outputLabel for="documentType" value="#{msgs.documentType}" />
+										<p:selectOneMenu id="documentType"
+											value="#{document.documentTypeId}">
+											<f:selectItems value="#{document.documentTypes}" var="type"
+												itemLabel="#{type.name}" itemValue="#{type.id}" />
+										</p:selectOneMenu>
+										<p:outputLabel for="documentName"
+											value="#{msgs.documentTitle}" />
+										<p:inputTextarea id="documentName"
+											placeholder="#{msgs.exampleDashStudentCouncil}"
+											required="true" requiredMessage="#{msgs.noDocumentName}"
+											value="#{document.documentTitle}"
+											validatorMessage="#{msgs.documentTitle}: #{msgs.invalidFieldTextLenght100}"
+											maxlength="100">
+											<f:validateLength minimum="1" maximum="100" />
+										</p:inputTextarea>
+										<p:outputLabel for="documentIssued" value="#{msgs.dateIssued}" />
+										<p:calendar id="documentIssued"
+											value="#{document.documentDate}" required="true"
+											requiredMessage="#{msgs.noDocumentDate}"
+											placeholder="#{msgs.exampleDate}" navigator="true"
+											pattern="dd.MM.yyyy" mask="true" />
+										<p:outputLabel for="documentInstitution"
+											value="#{msgs.documentInstitution}" />
+										<p:inputTextarea id="documentInstitution"
+											placeholder="#{msgs.exampleNameInstitution}" required="true"
+											requiredMessage="#{msgs.noDocumentName}"
+											value="#{document.documentInstitution}"
+											validatorMessage="#{msgs.documentInstitution}: #{msgs.invalidFieldTextLenght100}"
+											maxlength="100">
+											<f:validateLength minimum="1" maximum="100" />
+										</p:inputTextarea>
+										<p:outputLabel for="documentSignedBy" value="#{msgs.signedBy}" />
+										<p:inputText id="documentSignedBy"
+											value="#{document.documentSignedBy}" maxlength="36"
+											required="true" requiredMessage="#{msgs.noDocumentSignedBy}"
+											placeholder="#{msgs.exampleNamePerson}" />
+										<h:outputLink target="_blank"
+											value="#{initParam['displayName']}/files/#{document.document.name}">
+													#{document.document.title}
+												</h:outputLink>
+										<p:fileUpload value="#{document.file}" mode="simple"
+											skinSimple="true" allowTypes="/(\.|\/)(pdf)$/"
+											multiple="false" />
+										<h:commandButton action="#{document.documentUpdate()}"
+											value="#{msgs.documentUpdate}">
+											<f:param name="documentId" value="#{document.document.id}" />
+										</h:commandButton>
+										<h:commandButton
+											action="#{document.documentRemove(document.document)}"
+											value="#{msgs.documentRemove}">
+											<f:param name="documentId" value="#{document.document.id}" />
+										</h:commandButton>
+									</h:form>
+								</div>
+							</div>
+						</div>
+						<!-- #content .site-content -->
+					</div>
+					<!-- #primary .content-area -->
+				</div>
+				<!-- .full-container -->
+			</div>
+		</ui:define>
+		<!-- #main .site-main -->
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:body>
+	<ui:composition template="../layout.xhtml">
+		<h:messages layout="table" errorStyle="background: red;"
+			infoStyle="background: #AFEEEE;" globalOnly="true" />
+		<ui:define name="main">
+			<div id="main" class="site-main">
+				<div class="full-container">
+					<div id="primary" class="content-area">
+						<div id="content" class="site-content">
+							<div class="entry-content">
+								<h1>#{msgs.projectForm}</h1>
+								<div class="panel-grid">
+									<h:form id="projectNew" enctype="multipart/form-data">
+										<p:outputLabel for="projectName" value="#{msgs.projectName}" />
+										<p:inputText id="projectName"
+											placeholder="#{msgs.exampleDashDiaphanum}" required="true"
+											requiredMessage="#{msgs.noProjectName}"
+											value="#{projectNew.project.name}"
+											validatorMessage="#{msgs.projectDescription}: #{msgs.invalidFieldTextLenght100}"
+											maxlength="100">
+											<f:validateLength minimum="1" maximum="100" />
+										</p:inputText>
+										<h2>#{msgs.projectTeam}</h2>
+										<h:outputText value="#{msgs.accountablePerson}: " />
+										<h:outputText rendered="#{not empty profile.user.fullname}"
+											value="#{profile.user.fullname}" />
+										<h:outputText value=", Тел.: " />
+										<h:outputText rendered="#{not empty profile.user.phone}"
+											value="#{profile.user.phone}" />
+										<h:outputText value=", Email: " />
+										<h:outputText rendered="#{not empty profile.user.email}"
+											value="#{profile.user.email}" />
+										<h3 style="color: red;">#{msgs.projectNewAddMemberDescription}</h3>
+										<h2>#{msgs.projectDetails}</h2>
+										<p:outputLabel for="projectDescription"
+											value="#{msgs.projectDescription}" />
+										<p:inputTextarea id="projectDescription"
+											placeholder="#{msgs.projectDescription}" required="true"
+											requiredMessage="#{msgs.noProjectDescription}"
+											value="#{projectNew.project.description}"
+											validatorMessage="#{msgs.projectDescription}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<p:outputLabel for="projectPurpose"
+											value="#{msgs.projectPurpose}" />
+										<p:inputTextarea id="projectPurpose"
+											placeholder="#{msgs.projectPurposeAndPreEvaluationOfEffect}"
+											required="true" requiredMessage="#{msgs.noProjectPurpose}"
+											value="#{projectNew.project.purpose}"
+											validatorMessage="#{msgs.projectDescription}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<p:outputLabel for="projectTask" value="#{msgs.projectTask}" />
+										<p:inputTextarea id="projectTask"
+											placeholder="#{msgs.projectTasksDescription}" required="true"
+											requiredMessage="#{msgs.noProjectTask}"
+											value="#{projectNew.project.tasks}"
+											validatorMessage="#{msgs.projectDescription}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<p:outputLabel for="projectTargetGroup"
+											value="#{msgs.projectTargetGroup}" />
+										<p:inputTextarea id="projectTargetGroup"
+											placeholder="#{msgs.projectTargetGroupDescription}"
+											required="true"
+											requiredMessage="#{msgs.noProjectTargetGroup}"
+											value="#{projectNew.project.targetGroup}"
+											validatorMessage="#{msgs.projectDescription}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<p:outputLabel for="projectSchedule"
+											value="#{msgs.projectSchedule}" />
+										<p:inputTextarea id="projectSchedule"
+											placeholder="#{msgs.projectScheduleDescription}"
+											required="true" requiredMessage="#{msgs.noProjectSchedule}"
+											value="#{projectNew.project.schedule}"
+											validatorMessage="#{msgs.projectDescription}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<p:outputLabel for="projectResources"
+											value="#{msgs.projectResources}" />
+										<p:inputTextarea id="projectResources"
+											placeholder="#{msgs.projectResourcesDescription}"
+											required="true" requiredMessage="#{msgs.noProjectResources}"
+											value="#{projectNew.project.resourse}"
+											validatorMessage="#{msgs.projectDescription}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<p:outputLabel for="projectBudjetTxt"
+											value="#{msgs.projectBudjetTxt}" />
+										<p:inputTextarea id="projectBudjetTxt"
+											placeholder="#{msgs.projectBudjetTxtDescription}"
+											required="true" requiredMessage="#{msgs.noProjectBudjetTxt}"
+											value="#{projectNew.project.budjetText}"
+											validatorMessage="#{msgs.projectDescription}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<p:outputLabel for="projectBudjet"
+											value="#{msgs.projectBudjet}" />
+										<pe:inputNumber id="projectBudjet" required="true"
+											requiredMessage="#{msgs.noProjectBudjet}"
+											value="#{projectNew.project.budjet}" symbol=" BGN"
+											symbolPosition="s" decimalPlaces="2" emptyValue="sign"
+											decimalSeparator="." thousandSeparator="," tooltip="test" />
+										<p:outputLabel for="projectPartners"
+											value="#{msgs.projectPartners}" />
+										<p:inputTextarea id="projectPartners"
+											placeholder="#{msgs.projectPartnersDescription}"
+											value="#{projectNew.project.partners}"
+											validatorMessage="#{msgs.projectDescription}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<h2>#{msgs.projectFiles}</h2>
+										<h3 style="color: red;">#{msgs.projectNewAddFileDescription}</h3>
+										<h:commandButton action="#{projectNew.projectCreate()}"
+											value="#{msgs.projectSubmit}" />
+									</h:form>
+								</div>
+							</div>
+						</div>
+						<!-- #content .site-content -->
+					</div>
+					<!-- #primary .content-area -->
+				</div>
+				<!-- .full-container -->
+			</div>
+		</ui:define>
+		<!-- #main .site-main -->
+	</ui:composition>
+</h:body>
+</html>

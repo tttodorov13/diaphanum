@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:body>
+	<ui:composition template="../layout.xhtml">
+		<h:messages layout="table" errorStyle="background: red;"
+			infoStyle="background: #AFEEEE;" globalOnly="true" />
+		<ui:define name="main">
+			<div id="main" class="site-main">
+				<div class="full-container">
+					<div id="primary" class="content-area">
+						<div id="content" class="site-content">
+							<div class="entry-content">
+								<h1>#{msgs.projectForm}</h1>
+								<div class="panel-grid">
+									<h:form enctype="multipart/form-data" prependId="false">
+										<p:outputLabel for="projectName" value="#{msgs.projectName}" />
+										<p:inputTextarea id="projectName"
+											placeholder="#{msgs.exampleDashDiaphanum}" required="true"
+											requiredMessage="#{msgs.noProjectName}"
+											value="#{projectEdit.project.name}"
+											disabled="#{not projectEdit.isEditable}"
+											validatorMessage="#{msgs.projectDescription}: #{msgs.invalidFieldTextLenght100}"
+											maxlength="100">
+											<f:validateLength minimum="1" maximum="100" />
+										</p:inputTextarea>
+										<p:separator />
+										<h2>#{msgs.projectTeam}</h2>
+										<h:outputText value="#{msgs.accountablePerson}: " />
+										<h:outputText rendered="#{not empty profile.user.fullname}"
+											value="#{profile.user.fullname}" />
+										<h:outputText value=", #{msgs.phoneReduced}: " />
+										<h:outputText rendered="#{not empty profile.user.phone}"
+											value="#{profile.user.phone}" />
+										<h:outputText value=", #{msgs.email}: " />
+										<h:outputText rendered="#{not empty profile.user.email}"
+											value="#{profile.user.email}" />
+										<p:panelGrid id="members">
+											<ui:repeat value="#{projectEdit.members}" var="member">
+												<h:outputText value="#{member.fullname}"
+													rendered="#{not projectEdit.isEditable}" />
+												<ui:fragment rendered="#{not projectEdit.isEditable}">
+													<br />
+												</ui:fragment>
+												<pm:field rendered="#{projectEdit.isEditable}">
+													<p:outputLabel value="#{member.fullname}" />
+													<p:commandButton value="#{msgs.removeProjectMember}"
+														action="#{projectEdit.memberRemove(member)}"
+														oncomplete="location.reload();">
+														<f:param name="projectId"
+															value="#{projectEdit.project.id}" />
+													</p:commandButton>
+												</pm:field>
+											</ui:repeat>
+										</p:panelGrid>
+										<pm:field rendered="#{projectEdit.isEditable}">
+											<p:inputText value="#{projectEdit.memberFullname}"
+												maxlength="36" />
+											<p:commandButton value="#{msgs.addProjectMember}"
+												oncomplete="location.reload();"
+												actionListener="#{projectEdit.memberAdd()}">
+												<f:param name="projectId" value="#{projectEdit.project.id}" />
+											</p:commandButton>
+										</pm:field>
+										<p:separator />
+										<h2>#{msgs.projectDetails}</h2>
+										<p:outputLabel for="projectDescription"
+											value="#{msgs.projectDescription}" />
+										<p:inputTextarea id="projectDescription"
+											placeholder="#{msgs.projectDescription}" required="true"
+											requiredMessage="#{msgs.noProjectDescription}"
+											value="#{projectEdit.project.description}"
+											disabled="#{not projectEdit.isEditable}"
+											validatorMessage="#{msgs.projectDescription}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<p:outputLabel for="projectPurpose"
+											value="#{msgs.projectPurpose}" />
+										<p:inputTextarea id="projectPurpose"
+											placeholder="#{msgs.projectPurposeAndPreEvaluationOfEffect}"
+											required="true" requiredMessage="#{msgs.noProjectPurpose}"
+											value="#{projectEdit.project.purpose}"
+											disabled="#{not projectEdit.isEditable}"
+											validatorMessage="#{msgs.projectPurpose}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<p:outputLabel for="projectTask" value="#{msgs.projectTask}" />
+										<p:inputTextarea id="projectTask"
+											placeholder="#{msgs.projectTasksDescription}" required="true"
+											requiredMessage="#{msgs.noProjectTask}"
+											value="#{projectEdit.project.tasks}"
+											disabled="#{not projectEdit.isEditable}"
+											validatorMessage="#{msgs.projectTask}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<p:outputLabel for="projectTargetGroup"
+											value="#{msgs.projectTargetGroup}" />
+										<p:inputTextarea id="projectTargetGroup"
+											placeholder="#{msgs.projectTargetGroupDescription}"
+											required="true"
+											requiredMessage="#{msgs.noProjectTargetGroup}"
+											value="#{projectEdit.project.targetGroup}"
+											disabled="#{not projectEdit.isEditable}"
+											validatorMessage="#{msgs.projectTargetGroup}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<p:outputLabel for="projectSchedule"
+											value="#{msgs.projectSchedule}" />
+										<p:inputTextarea id="projectSchedule"
+											placeholder="#{msgs.projectScheduleDescription}"
+											required="true" requiredMessage="#{msgs.noProjectSchedule}"
+											value="#{projectEdit.project.schedule}"
+											disabled="#{not projectEdit.isEditable}"
+											validatorMessage="#{msgs.projectSchedule}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<p:outputLabel for="projectResources"
+											value="#{msgs.projectResources}" />
+										<p:inputTextarea id="projectResources"
+											placeholder="#{msgs.projectResourcesDescription}"
+											required="true" requiredMessage="#{msgs.noProjectResources}"
+											value="#{projectEdit.project.resourse}"
+											disabled="#{not projectEdit.isEditable}"
+											validatorMessage="#{msgs.projectResources}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<p:outputLabel for="projectBudjetTxt"
+											value="#{msgs.projectBudjetTxt}" />
+										<p:inputTextarea id="projectBudjetTxt"
+											placeholder="#{msgs.projectBudjetTxtDescription}"
+											required="true" requiredMessage="#{msgs.noProjectBudjetTxt}"
+											value="#{projectEdit.project.budjetText}"
+											disabled="#{not projectEdit.isEditable}"
+											validatorMessage="#{msgs.projectBudjetTxt}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<p:outputLabel for="projectBudjet"
+											value="#{msgs.projectBudjet}" />
+										<pe:inputNumber id="projectBudjet" required="true"
+											requiredMessage="#{msgs.noProjectBudjet}"
+											value="#{projectEdit.project.budjet}" symbol=" BGN"
+											symbolPosition="s" decimalPlaces="2" emptyValue="sign"
+											decimalSeparator="." thousandSeparator="," tooltip="test"
+											disabled="#{not projectEdit.isEditable}" />
+										<p:outputLabel for="projectPartners"
+											value="#{msgs.projectPartners}" />
+										<p:inputTextarea id="projectPartners"
+											placeholder="#{msgs.projectPartnersDescription}"
+											value="#{projectEdit.project.partners}"
+											disabled="#{not projectEdit.isEditable}"
+											validatorMessage="#{msgs.projectPartners}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<p:separator />
+										<h2>#{msgs.projectFiles}</h2>
+										<p:panelGrid id="files">
+											<ui:repeat value="#{projectEdit.files}" var="file">
+												<pm:field>
+													<h:outputLink target="_blank"
+														value="#{initParam['displayName']}/files/#{file.name}">
+														#{file.title}
+													</h:outputLink>
+													<p:commandButton value="#{msgs.removeFile}"
+														actionListener="#{projectEdit.fileRemove(file)}"
+														oncomplete="location.reload();"
+														rendered="#{projectEdit.isEditable}">
+														<f:param name="projectId"
+															value="#{projectEdit.project.id}" />
+													</p:commandButton>
+												</pm:field>
+											</ui:repeat>
+										</p:panelGrid>
+										<p:fileUpload value="#{projectEdit.file}" mode="simple"
+											skinSimple="true" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/"
+											rendered="#{projectEdit.isEditable}">
+											<f:param name="projectId" value="#{projectEdit.project.id}" />
+										</p:fileUpload>
+										<p:commandButton value="#{msgs.addProjectFile}" ajax="false"
+											oncomplete="location.reload();"
+											actionListener="#{projectEdit.fileUpload()}"
+											rendered="#{projectEdit.isEditable}">
+											<f:param name="projectId" value="#{projectEdit.project.id}" />
+										</p:commandButton>
+										<p:outputLabel for="projectStatus"
+											value="#{msgs.projectStatus}"
+											rendered="#{projectEdit.isCommendable}" />
+										<p:selectOneMenu id="projectStatus"
+											value="#{projectEdit.project.status}"
+											rendered="#{projectEdit.isCommendable}">
+											<f:selectItem itemLabel="#{msgs.selectProjectStatus}"
+												itemValue="" />
+											<f:selectItems value="#{projectEdit.projectStatuses}"
+												var="status" itemLabel="#{status.name}"
+												itemValue="#{status.id}" />
+										</p:selectOneMenu>
+										<p:outputLabel value="#{msgs.projectCommend}"
+											rendered="#{not empty projectEdit.project.commend}" />
+										<p:outputPanel style="color: red;"
+											rendered="#{(not empty projectEdit.project.commend) and (not projectEdit.isCommendable)}">
+											#{projectEdit.project.commend}
+										</p:outputPanel>
+										<p:inputTextarea
+											placeholder="#{msgs.projectCommendDescription}"
+											value="#{projectEdit.project.commend}" required="true"
+											requiredMessage="#{msgs.noProjectCommend}"
+											style="color: red;" rendered="#{projectEdit.isCommendable}"
+											validatorMessage="#{msgs.projectPartners}: #{msgs.invalidFieldTextLenght1200}"
+											maxlength="1200">
+											<f:validateLength minimum="1" maximum="1200" />
+										</p:inputTextarea>
+										<h:commandButton action="#{projectEdit.projectUpdate()}"
+											value="#{msgs.projectRefresh}"
+											rendered="#{projectEdit.isCommendable}">
+											<f:param name="projectId" value="#{projectEdit.project.id}" />
+										</h:commandButton>
+										<h:commandButton action="#{projectEdit.projectUpdate()}"
+											value="#{msgs.projectRefresh}"
+											rendered="#{projectEdit.isEditable}">
+											<f:param name="projectId" value="#{projectEdit.project.id}" />
+										</h:commandButton>
+										<h:commandButton action="#{projectEdit.projectDelete()}"
+											value="#{msgs.projectRemove}"
+											rendered="#{projectEdit.isEditable}">
+											<f:param name="projectId" value="#{projectEdit.project.id}" />
+										</h:commandButton>
+									</h:form>
+								</div>
+							</div>
+						</div>
+						<!-- #content .site-content -->
+					</div>
+					<!-- #primary .content-area -->
+				</div>
+				<!-- .full-container -->
+			</div>
+		</ui:define>
+		<!-- #main .site-main -->
+	</ui:composition>
+</h:body>
+</html>

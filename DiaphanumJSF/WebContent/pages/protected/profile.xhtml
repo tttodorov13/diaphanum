@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="../layout.xhtml">
+		<h:messages layout="table" errorStyle="background: red;"
+			infoStyle="background: #AFEEEE;" globalOnly="true" />
+		<ui:define name="main">
+			<div id="main" class="site-main">
+				<div class="full-container">
+					<div id="primary" class="content-area">
+						<div id="content" class="site-content">
+							<div class="entry-content">
+								<div class="panel-grid">
+									<h:form>
+										<div class="textwidget">
+											<div align="center">
+												<h:commandButton action="#{auth.logout()}"
+													value="#{msgs.logOut}" />
+											</div>
+										</div>
+									</h:form>
+								</div>
+								<p:separator />
+								<h1>#{msgs.pageProfile}</h1>
+								<div class="panel-grid" id="pg-home-0">
+									<div class="panel-grid-cell" id="pgc-home-0-0">
+										<div
+											class="panel widget widget_siteorigin-panels-image panel-first-child profile">
+											<h:graphicImage value="/resources/img/profile.png"
+												style="width: 160px; height: 160px;" />
+										</div>
+										<div
+											class="panel widget widget_text panel-last-child profileText">
+											<div class="textwidget">
+												<div align="center" class="title">
+													<h:outputText rendered="#{empty profile.user.fullname}"
+														value="#{msgs.pageProfile}" />
+													<h:outputText rendered="#{not empty profile.user.fullname}"
+														value="#{profile.user.fullname}" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel-grid-cell" id="pgc-home-0-1">
+										<div class="profile">
+											<h:form>
+												<div class="textwidget">
+													<p:outputLabel value="#{msgs.nameOfUser}" for="nameOfUser" />
+													<p:inputText value="#{profile.user.fullname}"
+														id="nameOfUser" placeholder="#{msgs.nameOfUser}"
+														required="true" requiredMessage="#{msgs.noName}" />
+												</div>
+												<div class="textwidget">
+													<p:outputLabel value="#{msgs.email}" for="email" />
+													<p:inputText value="#{profile.user.email}" id="email"
+														placeholder="#{msgs.email}" required="true"
+														requiredMessage="#{msgs.noEmail}"
+														validatorMessage="#{msgs.invalidEmailFormat}">
+														<f:validateRegex
+															pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+													</p:inputText>
+												</div>
+												<div class="textwidget">
+													<p:outputLabel value="#{msgs.phone}" for="phone" />
+													<p:inputText value="#{profile.user.phone}" id="phone"
+														placeholder="#{msgs.phone}" required="true"
+														requiredMessage="#{msgs.noPhone}"
+														validatorMessage="#{msgs.invalidPhoneFormat}">
+														<f:validateRegex pattern="^([+]?[\d]+)?$" />
+													</p:inputText>
+												</div>
+												<h:panelGroup rendered="#{auth.user.isAdmin}">
+													<div class="textwidget">
+														<p:outputLabel value="#{msgs.admin}" for="isAdmin" />
+														<p:selectBooleanCheckbox value="#{profile.user.isAdmin}"
+															id="isAdmin"
+															style="margin-top: 20px; margin-bottom: 40px;" />
+													</div>
+												</h:panelGroup>
+												<div class="textwidget" style="margin-top: 20px;">
+													<h:commandButton action="#{profile.userUpdate()}"
+														value="#{msgs.confirm}" />
+												</div>
+											</h:form>
+										</div>
+									</div>
+									<div class="panel-grid-cell" id="pgc-home-0-2">
+										<div class="profile">
+											<h:form>
+												<div class="textwidget">
+													<p:outputLabel value="#{msgs.password}" for="password" />
+													<p:password value="#{profile.password1}" id="password"
+														required="true" placeholder="#{msgs.password}"
+														requiredMessage="#{msgs.noPassword}"
+														validatorMessage="#{msgs.invalidPassword}">
+														<f:validateLength minimum="10"></f:validateLength>
+														<f:validateLength maximum="20"></f:validateLength>
+													</p:password>
+												</div>
+												<div class="textwidget">
+													<p:outputLabel value="#{msgs.repeatePassword}"
+														for="repeatePassword" />
+													<p:password value="#{profile.password2}"
+														id="repeatePassword" required="true"
+														placeholder="#{msgs.repeatePassword}"
+														requiredMessage="#{msgs.noPassword}"
+														validatorMessage="#{msgs.invalidPassword}">
+														<f:validateLength minimum="10"></f:validateLength>
+														<f:validateLength maximum="20"></f:validateLength>
+													</p:password>
+												</div>
+												<div class="textwidget" style="margin-top: 20px;">
+													<div align="center">
+														<h:commandButton action="#{profile.userUpdate()}"
+															value="#{msgs.confirm}" />
+													</div>
+												</div>
+											</h:form>
+										</div>
+									</div>
+								</div>
+								<p:separator />
+								<h1>#{msgs.myProjects}</h1>
+								<div class="panel-grid">
+									<h:form id="myProjects">
+										<p:dataTable emptyMessage="#{msgs.noRecordsFound}"
+											var="project" value="#{profile.lazyModelProject}"
+											paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+											paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+											selectionMode="single" selection="#{profile.selectedProject}"
+											id="projectTable" lazy="true"
+											rowStyleClass="#{project.status eq 2 ? 'projectStatusReturned' : null}
+											#{project.status eq 3 ? 'projectStatusChecked' : null}
+											#{project.status eq 4 ? 'projectStatusDisapproved' : null}
+											#{project.status eq 5 ? 'projectStatusApproved' : null}">
+											<p:column headerText="#{msgs.projectName}">
+												<h:link outcome="projectEdit" value="#{project.name}">
+													<f:param name="projectId" value="#{project.id}" />
+												</h:link>
+											</p:column>
+											<p:column headerText="#{msgs.projectCommend}">
+												<h:outputText value="#{project.commend}" />
+											</p:column>
+											<p:column headerText="#{msgs.projectCreatedOn}">
+												<h:outputText value="#{project.createdOn}">
+													<f:convertDateTime pattern="dd.M.yyyy" type="date" />
+												</h:outputText>
+											</p:column>
+										</p:dataTable>
+									</h:form>
+								</div>
+								<h1>#{msgs.legend}</h1>
+								<div class="panel-grid">
+									<p:dataTable var="projectStatus"
+										emptyMessage="#{msgs.noRecordsFound}"
+										value="#{profile.projectStatuses}" rows="5" id="legendTable"
+										rowStyleClass="#{projectStatus.id eq 2 ? 'projectStatusReturned' : null}
+											#{projectStatus.id eq 3 ? 'projectStatusChecked' : null}
+											#{projectStatus.id eq 4 ? 'projectStatusDisapproved' : null}
+											#{projectStatus.id eq 5 ? 'projectStatusApproved' : null}">
+										<p:column headerText="#{msgs.status}">
+											<h:outputText value="#{projectStatus.name}" />
+										</p:column>
+										<p:column headerText="#{msgs.details}">
+											<h:outputText value="#{projectStatus.description}" />
+										</p:column>
+									</p:dataTable>
+								</div>
+								<p:separator />
+								<h1>#{msgs.myRequests}</h1>
+								<div class="panel-grid">
+									<p:dataTable emptyMessage="#{msgs.noRecordsFound}"
+										var="message" value="#{profile.lazyModelMessage}"
+										paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+										paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+										selectionMode="single" selection="#{profile.selectedMessage}"
+										id="messageTable" lazy="true"
+										rowStyleClass="#{empty message.reply ? 'messageNotReplied' : null}"
+										widgetVar="messageTable">
+										<p:column headerText="#{msgs.request}" style="width: 50%;">
+											<h:outputText value="#{message.content}"
+												rendered="#{not empty message.reply}" />
+											<h:link outcome="message" value="#{message.content}"
+												rendered="#{empty message.reply}">
+												<f:param name="messageId" value="#{message.id}" />
+											</h:link>
+										</p:column>
+										<p:column headerText="#{msgs.reply}" style="width: 50%;">
+											<h:outputText value="#{message.reply}" />
+										</p:column>
+									</p:dataTable>
+								</div>
+								<h:panelGroup layout="block" rendered="#{profile.user.isAdmin}">
+									<p:separator />
+									<h1>#{msgs.users}</h1>
+									<div class="panel-grid">
+										<h:form id="users" enctype="multipart/form-data">
+											<p:dataTable emptyMessage="#{msgs.noRecordsFound}" var="user"
+												value="#{profile.lazyModelUser}" paginator="true" rows="10"
+												rowsPerPageTemplate="5,10,15"
+												paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+												selectionMode="single" selection="#{profile.selectedUser}"
+												id="usersTable" lazy="true" widgetVar="usersTable"
+												rowStyleClass="#{user.isAdmin ? 'userAdmin' : null}">
+												<p:column headerText="#{msgs.nameOfUser}">
+													<h:link outcome="profileView" value="#{user.fullname}">
+														<f:param name="userId" value="#{user.id}" />
+													</h:link>
+												</p:column>
+												<p:column headerText="#{msgs.email}">
+													<h:outputLink value="mailto:#{user.email}">
+														<f:param name="subject" value="#{msgs.diaphanum}" />
+														<f:param name="body" value="#{msgs.diaphanum}" />
+														<h:outputText value="#{user.email}" />
+													</h:outputLink>
+												</p:column>
+												<p:column headerText="#{msgs.phone}">
+													<h:outputLink value="tel:#{user.phone}">
+														<h:outputText value="#{user.phone}" />
+													</h:outputLink>
+												</p:column>
+											</p:dataTable>
+										</h:form>
+									</div>
+								</h:panelGroup>
+							</div>
+						</div>
+						<!-- #content .site-content -->
+					</div>
+					<!-- #primary .content-area -->
+				</div>
+				<!-- .full-container -->
+			</div>
+		</ui:define>
+		<!-- #main .site-main -->
+	</ui:composition>
+</h:body>
+</html>

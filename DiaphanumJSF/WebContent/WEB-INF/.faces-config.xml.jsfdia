@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::0" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="home::#pages#public#home.xhtml"
+    NAME="output" PATH="/pages/public/home.xhtml"
+    TARGET="rules:#pages#public#home.xhtml" TITLE="home" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="projectNew::#pages#protected#projectNew.xhtml" NAME="output1"
+    PATH="/pages/protected/projectNew.xhtml"
+    TARGET="rules:#pages#protected#projectNew.xhtml" TITLE="projectNew" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="projects::#pages#public#projects.xhtml"
+    NAME="output2" PATH="/pages/public/projects.xhtml"
+    TARGET="rules:#pages#public#projects.xhtml" TITLE="projects" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="documents::#pages#public#documents.xhtml"
+    NAME="output3" PATH="/pages/public/documents.xhtml"
+    TARGET="rules:#pages#public#documents.xhtml" TITLE="documents" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="document::#pages#public#document.xhtml"
+    NAME="output4" PATH="/pages/public/document.xhtml"
+    TARGET="rules:#pages#public#document.xhtml" TITLE="document" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="feedback::#pages#public#feedback.xhtml"
+    NAME="output5" PATH="/pages/public/feedback.xhtml"
+    TARGET="rules:#pages#public#feedback.xhtml" TITLE="feedback" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="message::#pages#public#message.xhtml"
+    NAME="output6" PATH="/pages/public/message.xhtml"
+    TARGET="rules:#pages#public#message.xhtml" TITLE="message" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="login::#pages#public#login.xhtml"
+    NAME="output7" PATH="/pages/public/login.xhtml"
+    TARGET="rules:#pages#public#login.xhtml" TITLE="login" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="logout::#pages#public#home.xhtml"
+    NAME="output8" PATH="/pages/public/home.xhtml"
+    TARGET="rules:#pages#public#home.xhtml" TITLE="logout" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="menu::#pages#public#menu.xhtml"
+    NAME="output9" PATH="/pages/public/menu.xhtml"
+    TARGET="rules:#pages#public#menu.xhtml" TITLE="menu" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="profile::#pages#protected#profile.xhtml"
+    NAME="output10" PATH="/pages/protected/profile.xhtml"
+    TARGET="rules:#pages#protected#profile.xhtml" TITLE="profile" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="profileView::#pages#public#profileView.xhtml" NAME="output11"
+    PATH="/pages/public/profileView.xhtml"
+    TARGET="rules:#pages#public#profileView.xhtml" TITLE="profileView" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="projectEdit::#pages#protected#projectEdit.xhtml" NAME="output12"
+    PATH="/pages/protected/projectEdit.xhtml"
+    TARGET="rules:#pages#protected#projectEdit.xhtml"
+    TITLE="projectEdit" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#public#home.xhtml"
+  PATH="/pages/public/home.xhtml" SHAPE="256,401,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#public#login.xhtml"
+  PATH="/pages/public/login.xhtml" SHAPE="272,545,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#public#projects.xhtml"
+  PATH="/pages/public/projects.xhtml" SHAPE="304,721,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#public#documents.xhtml"
+  PATH="/pages/public/documents.xhtml" SHAPE="304,721,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#public#feedback.xhtml"
+  PATH="/pages/public/feedback.xhtml" SHAPE="304,785,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#protected#profile.xhtml"
+  PATH="/pages/protected/profile.xhtml" SHAPE="240,1121,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#protected#projectNew.xhtml"
+  PATH="/pages/protected/projectNew.xhtml" SHAPE="304,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#public#menu.xhtml"
+  PATH="/pages/public/menu.xhtml" SHAPE="304,369,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#public#profileView.xhtml"
+  PATH="/pages/public/profileView.xhtml" SHAPE="304,465,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#public#document.xhtml"
+  PATH="/pages/public/document.xhtml" SHAPE="304,465,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#public#message.xhtml"
+  PATH="/pages/public/message.xhtml" SHAPE="304,465,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#protected#projectEdit.xhtml"
+  PATH="/pages/protected/projectEdit.xhtml" SHAPE="304,529,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

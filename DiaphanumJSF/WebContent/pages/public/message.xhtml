@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+<h:body>
+	<ui:composition template="../layout.xhtml">
+		<h:messages layout="table" errorStyle="background: red;"
+			infoStyle="background: #AFEEEE;" globalOnly="true" />
+
+		<ui:define name="main">
+			<div id="main" class="site-main">
+				<div class="full-container">
+					<div id="primary" class="content-area">
+						<div id="content" class="site-content">
+							<div class="entry-content">
+								<h1>#{msgs.editingRequest}</h1>
+								<div class="panel-grid">
+									<h:form id="message" enctype="multipart/form-data">
+										<p:outputLabel for="messagerName"
+											value="#{msgs.nameForContact}"
+											rendered="#{not empty message.message.createdBy}" />
+										<h:link id="messagerName" outcome="profileView"
+											value="#{message.getMessagerFullname(message.message.createdBy)}"
+											rendered="#{not empty message.message.createdBy}">
+											<f:param name="userId" value="#{message.message.createdBy}" />
+										</h:link>
+										<h:panelGroup
+											rendered="#{message.user.isAdmin and (not empty message.message.createdBy)}">
+											<p:outputLabel for="messagerEmail"
+												value="#{msgs.emailForContact}" />
+											<h:outputLink id="messagerEmail"
+												value="mailto:#{message.getMessagerEmail(message.message.createdBy)}">
+												<f:param name="subject" value="#{msgs.diaphanum}" />
+												<f:param name="body" value="#{msgs.diaphanum}" />
+												<h:outputText
+													value="#{message.getMessagerEmail(message.message.createdBy)}" />
+											</h:outputLink>
+										</h:panelGroup>
+										<p:outputLabel for="request" value="#{msgs.request}" />
+										<p:inputTextarea id="request" placeholder="#{msgs.request}"
+											required="true" requiredMessage="#{msgs.noMessage}"
+											value="#{message.message.content}"
+											validatorMessage="#{msgs.request}: #{msgs.invalidFieldTextLenght100}"
+											maxlength="100" disabled="#{not message.isEditable()}">
+											<f:validateLength minimum="1" maximum="100" />
+										</p:inputTextarea>
+										<p:outputLabel for="reply" value="#{msgs.reply}" />
+										<p:inputTextarea id="reply" placeholder="#{msgs.reply}"
+											required="true" requiredMessage="#{msgs.noRequestReply}"
+											value="#{message.message.reply}"
+											validatorMessage="#{msgs.request}: #{msgs.invalidFieldTextLenght100}"
+											maxlength="100" rendered="#{message.user.isAdmin}">
+											<f:validateLength minimum="1" maximum="100" />
+										</p:inputTextarea>
+										<h:commandButton value="#{msgs.requestUpdate}"
+											oncomplete="location.reload();"
+											actionListener="#{message.messageUpdate()}">
+											<f:param name="messageId" value="#{message.message.id}" />
+										</h:commandButton>
+										<h:commandButton value="#{msgs.requestDelete}"
+											oncomplete="location.reload();"
+											actionListener="#{message.messageDelete()}"
+											rendered="#{message.isEditable()}">
+											<f:param name="messageId" value="#{message.message.id}" />
+										</h:commandButton>
+									</h:form>
+								</div>
+								<p:separator />
+								<h1>#{msgs.sentRequests}</h1>
+								<div class="panel-grid">
+									<p:dataTable emptyMessage="#{msgs.noRecordsFound}" var="msg"
+										value="#{message.lazyModelMessage}" paginator="true" rows="10"
+										rowsPerPageTemplate="5,10,15"
+										paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+										selectionMode="single" selection="#{message.selectedMessage}"
+										id="messageTable" lazy="true"
+										rowStyleClass="#{empty msg.reply ? 'messageNotReplied' : null}"
+										widgetVar="messageTable">
+										<p:column headerText="#{msgs.nameForContact}"
+											style="width: 20%;">
+											<h:link outcome="profileView"
+												value="#{message.getMessagerFullname(msg.createdBy)}">
+												<f:param name="userId" value="#{msg.createdBy}" />
+											</h:link>
+										</p:column>
+										<p:column headerText="#{msgs.request}" style="width: 40%;">
+											<h:outputText value="#{msg.content}"
+												rendered="#{not empty msg.reply}" />
+											<h:link outcome="message" value="#{msg.content}"
+												rendered="#{empty msg.reply}">
+												<f:param name="messageId" value="#{msg.id}" />
+											</h:link>
+										</p:column>
+										<p:column headerText="#{msgs.reply}" style="width: 40%;">
+											<h:outputText value="#{msg.reply}" />
+										</p:column>
+									</p:dataTable>
+								</div>
+							</div>
+						</div>
+						<!-- #content .site-content -->
+					</div>
+					<!-- #primary .content-area -->
+				</div>
+				<!-- .full-container -->
+			</div>
+		</ui:define>
+		<!-- #main .site-main -->
+	</ui:composition>
+</h:body>
+</html>

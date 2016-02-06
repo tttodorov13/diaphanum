@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+<h:body>
+	<ui:composition template="../layout.xhtml">
+		<h:messages layout="table" errorStyle="background: red;"
+			infoStyle="background: #AFEEEE;" globalOnly="true" />
+
+		<ui:define name="main">
+			<div id="main" class="site-main">
+				<div class="full-container">
+					<div id="primary" class="content-area">
+						<div id="content" class="site-content">
+							<div class="entry-content">
+								<h1>#{msgs.sendingRequest}</h1>
+								<div class="panel-grid">
+									<h:form id="message" enctype="multipart/form-data">
+										<pm:field rendered="#{empty feedback.user.id}">
+											<p:outputLabel for="messagerName"
+												value="#{msgs.nameForContact}" />
+											<p:inputText id="messagerName"
+												placeholder="#{msgs.exampleNamePerson}" required="true"
+												requiredMessage="#{msgs.noMessagerName}"
+												value="#{feedback.message.userFullname}"
+												validatorMessage="#{msgs.nameForContact}: #{msgs.invalidFieldTextLenght100}"
+												maxlength="100">
+												<f:validateLength minimum="1" maximum="100" />
+											</p:inputText>
+										</pm:field>
+										<pm:field rendered="#{empty feedback.user.id}">
+											<p:outputLabel for="messagerEmail"
+												value="#{msgs.emailForContact}" />
+											<p:inputText id="messagerEmail"
+												value="#{feedback.message.userEmail}" required="true"
+												placeholder="#{msgs.email}"
+												requiredMessage="#{msgs.noEmail}"
+												validatorMessage="#{msgs.invalidEmailFormat}">
+												<f:validateRegex
+													pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+												<f:validateLength minimum="1" maximum="100" />
+											</p:inputText>
+										</pm:field>
+										<p:outputLabel for="message" value="#{msgs.request}" />
+										<p:inputTextarea id="message" placeholder="#{msgs.request}"
+											required="true" requiredMessage="#{msgs.noMessage}"
+											value="#{feedback.message.content}"
+											validatorMessage="#{msgs.request}: #{msgs.invalidFieldTextLenght100}"
+											maxlength="100">
+											<f:validateLength minimum="1" maximum="100" />
+										</p:inputTextarea>
+										<p:captcha label="Captcha"
+											rendered="false" required="true"
+											requiredMessage="#{msgs.captchaRequired}" />
+										<h:commandButton value="#{msgs.send}"
+											oncomplete="location.reload();"
+											actionListener="#{feedback.messageCreate()}" />
+									</h:form>
+								</div>
+								<p:separator />
+								<h1>#{msgs.sentRequests}</h1>
+								<div class="panel-grid">
+									<p:dataTable emptyMessage="#{msgs.noRecordsFound}"
+										var="message" value="#{feedback.lazyModelMessage}"
+										paginator="true" rows="10" rowsPerPageTemplate="5,10,15"
+										paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {NextPageLink} {LastPageLink}"
+										selectionMode="single" selection="#{feedback.selectedMessage}"
+										id="feedbackTable" lazy="true"
+										rowStyleClass="#{empty message.reply ? 'messageNotReplied' : null}"
+										widgetVar="feedbackTable">
+										<p:column headerText="#{msgs.nameForContact}"
+											style="width: 20%;">
+											<h:outputText value="#{message.userFullname}" rendered="#{empty message.createdBy}" />
+											<h:link outcome="profileView" value="#{message.userFullname}"
+												rendered="#{not empty message.createdBy}">
+												<f:param name="userId" value="#{message.createdBy}" />
+											</h:link>
+										</p:column>
+										<p:column headerText="#{msgs.request}" style="width: 40%;">
+											<h:outputText value="#{message.content}"
+												rendered="#{not feedback.user.isAdmin}" />
+											<h:link outcome="message" value="#{message.content}"
+												rendered="#{feedback.user.isAdmin}">
+												<f:param name="messageId" value="#{message.id}" />
+											</h:link>
+										</p:column>
+										<p:column headerText="#{msgs.reply}" style="width: 40%;">
+											<h:outputText value="#{message.reply}" />
+										</p:column>
+									</p:dataTable>
+								</div>
+							</div>
+						</div>
+						<!-- #content .site-content -->
+					</div>
+					<!-- #primary .content-area -->
+				</div>
+				<!-- .full-container -->
+			</div>
+		</ui:define>
+		<!-- #main .site-main -->
+	</ui:composition>
+</h:body>
+</html>
